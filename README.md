@@ -1,10 +1,9 @@
 # 🐉 Dragon Tunnel
 
 <p align="center">
-  <img src="https://github.com/user-attachments/assets/05be80d8-d9d0-445a-9f52-b74f4991cadc" alt="DRAGON_EYE Logo" width="500"/>
+  <img src="https://github.com/user-attachments/assets/2588dfb1-8b0e-453d-9d48-02df94405f4c" alt="DRAGON_EYE Logo" width="600"/>
   <br>
   <em>DRAGON TUNNEL</em>
-</p>
 
 **Dragon Tunnel** is a sleek and stylish WireGuard-based tunnel tool that allows you to expose a local HTTP server to the internet with a temporary Pyjam link. It comes with a **start** and **stop** script, both fully stylized for terminal usage.  
 
