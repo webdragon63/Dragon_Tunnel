@@ -1,0 +1,74 @@
+#!/usr/bin/env bash
+CYAN="\033[1;36m"
+GREEN="\033[1;32m"
+MAGENTA="\033[1;35m"
+YELLOW="\033[1;33m"
+RED="\033[1;31m"
+RESET="\033[0m"
+BOLD="\033[1m"
+
+TUNNEL_NAME="tunnel"
+TUNNEL_CONF="tunnel.conf"
+
+
+print_banner() {
+    clear
+    local cols=$(tput cols)
+    local line="DRAGON_TUNNEL"
+    local border=$(printf '%*s' "$cols" '' | tr ' ' '_')
+    echo "$border"
+    local padding=$(( (cols - ${#line}) / 2 ))
+    echo -e "$(printf '%*s' $padding '')${BOLD}${MAGENTA}${line}${RESET}"
+    echo "$border"
+    echo
+}
+
+
+check_existing_tunnel() {
+    if ip link show "$TUNNEL_NAME" &> /dev/null; then
+        if [ -f "$TUNNEL_CONF" ]; then
+            PREV_LINK=$(strings "$TUNNEL_CONF" | grep -oP 'https://\w+\.tunnel\.pyjam\.as')
+        else
+            PREV_LINK="Unknown (tunnel.conf missing)"
+        fi
+
+        echo -e "${YELLOW}[⚠] Your previous tunnel is active.${RESET}"
+        echo -e "${YELLOW}[⚠] Previous tunnel link: ${CYAN}${PREV_LINK}${RESET}"
+        echo -e "${YELLOW}[⚠] Stop it using the 'stop' command before starting a new one.${RESET}"
+        exit 1
+    fi
+}
+
+
+print_banner
+check_existing_tunnel
+
+echo -ne "${CYAN}Enter the HTTP port for the tunnel (default 8080): ${RESET}"
+read CUSTOM_PORT
+CUSTOM_PORT=${CUSTOM_PORT:-8080}
+
+curl -sSL "https://tunnel.pyjam.as/$CUSTOM_PORT" -o "$TUNNEL_CONF"
+
+sudo wg-quick up ./"$TUNNEL_CONF" &> /dev/null
+STATUS=$?
+
+if [ $STATUS -ne 0 ]; then
+    echo -e "${RED}[✖] Failed to bring up the tunnel!${RESET}"
+    echo -e "${YELLOW}[⚠] Make sure you entered the correct password or have sudo privileges.${RESET}"
+    exit 1
+fi
+
+PYJAM_LINK=$(strings "$TUNNEL_CONF" | grep -oP 'https://\w+\.tunnel\.pyjam\.as')
+
+print_banner
+if [ -n "$PYJAM_LINK" ]; then
+    echo -e "${GREEN}[✨] Tunnel is up!${RESET}"
+    echo -e "${BOLD}${MAGENTA}Access your tunnel at:${RESET}"
+    echo -e "${CYAN}http://0.0.0.0:${CUSTOM_PORT} --> ${CYAN}${PYJAM_LINK}${RESET}"
+else
+    echo -e "${GREEN}[✨] Tunnel is up!${RESET}"
+    echo -e "${BOLD}${MAGENTA}Access your tunnel at:${RESET}"
+    echo -e "${CYAN}http://0.0.0.0:${CUSTOM_PORT}${RESET}"
+    echo -e "${YELLOW}[⚠] Could not detect Pyjam link. Please check manually.${RESET}"
+fi
+
