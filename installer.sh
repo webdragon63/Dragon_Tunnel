@@ -55,7 +55,7 @@ check_install_wg
 
 if [[ $EUID -ne 0 ]]; then
     echo -e "${YELLOW}[⚠] You need root privileges to install globally.${RESET}"
-    echo -e "${CYAN}Try: sudo ./installer.sh${RESET}"
+    echo -e "${CYAN}Try: sudo bash installer.sh${RESET}"
     exit 1
 fi
 
