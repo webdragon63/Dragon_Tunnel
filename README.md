@@ -34,7 +34,6 @@ cd DragonTunnel
 Run the installer (requires root privileges):
 
 ```bash
-Copy code
 sudo bash installer.sh
 ```
 The scripts will be installed globally
