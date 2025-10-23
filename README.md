@@ -36,7 +36,7 @@
 git clone https://github.com/YourUsername/DragonTunnel.git
 cd DragonTunnel
 ```
-Run the installer (requires root privileges):
+Run the installer:
 
 ```bash
 sudo bash installer.sh
