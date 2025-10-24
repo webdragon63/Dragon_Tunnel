@@ -48,7 +48,7 @@ sudo bash installer.sh
 ```bash
 dragontunnel
 ```
-***You will be prompted for an HTTP port (default is 8080).***
+**You will be prompted for an HTTP port (default is 8080).**
 **The script will download the Pyjam configuration and bring up the WireGuard tunnel.**
 **The terminal will display your local access link and the Pyjam public link.**
 
@@ -60,7 +60,7 @@ stop
 
 ### Notes
 - If a tunnel is already active, dragontunnel will prevent starting a new one and display the active Pyjam link.
-- If you cancel the sudo password prompt or the tunnel fails to start, the scripts handle this gracefully and do not show false success messages.
+
 - Works on Linux distributions with apt, yum, or pacman package managers.
 
   # Created by
