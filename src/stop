@@ -57,6 +57,7 @@ if ip link show "$TUNNEL_NAME" &> /dev/null; then
 
     echo -e "${YELLOW}[!] Stopping the active tunnel...${RESET}"
     sudo wg-quick down ./"$TUNNEL_CONF" &> /dev/null
+    sudo rm -rf "$TUNNEL_CONF"
     STATUS=$?
 
     if [ $STATUS -eq 0 ]; then
