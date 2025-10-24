@@ -33,8 +33,8 @@
 1. Clone or download the repository:
 
 ```bash
-git clone https://github.com/YourUsername/DragonTunnel.git
-cd DragonTunnel
+git clone https://github.com/YourUsername/Dragon_Tunnel.git
+cd Dragon_Tunnel
 ```
 Run the installer:
 
