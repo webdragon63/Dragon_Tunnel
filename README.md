@@ -63,6 +63,8 @@ stop
 
 - Works on Linux distributions with apt, yum, or pacman package managers.
 
+
   # Created by
 ### ***INDIAN CYBER ARMY***
+### ***Special Thanks To:*** **Asbjørn Kofoed-Nielsen**
 #### ***YT CHANNEL: [INDIAN CYBER ARMY](https://www.youtube.com/@webdragon63)***
