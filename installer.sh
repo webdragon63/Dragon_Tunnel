@@ -7,6 +7,12 @@ RED="\033[1;31m"
 RESET="\033[0m"
 BOLD="\033[1m"
 
+if [[ $EUID -ne 0 ]]; then
+    echo -e "${YELLOW}[⚠] You need root privileges to install globally.${RESET}"
+    echo -e "${CYAN}Try: sudo bash installer.sh${RESET}"
+    exit 1
+fi
+
 print_banner() {
     clear
     local cols=$(tput cols)
@@ -53,12 +59,6 @@ check_install_wg() {
 print_banner
 check_install_wg
 
-if [[ $EUID -ne 0 ]]; then
-    echo -e "${YELLOW}[⚠] You need root privileges to install globally.${RESET}"
-    echo -e "${CYAN}Try: sudo bash installer.sh${RESET}"
-    exit 1
-fi
-
 BIN_DIRS=("/usr/local/bin" "/usr/local/sbin")
 SCRIPTS=("dragontunnel" "stop")
 
@@ -82,4 +82,3 @@ echo -e "${BOLD}${MAGENTA}Installation complete! You can now run:${RESET}"
 echo -e "${CYAN}dragontunnel${RESET}  - To start the tunnel"
 echo -e "${CYAN}stop${RESET}    - To stop the tunnel"
 echo
-
