@@ -36,12 +36,12 @@
 git clone https://github.com/webdragon63/Dragon_Tunnel.git
 cd Dragon_Tunnel
 ```
-Run the installer:
+2. Run the installer:
 
 ```bash
 sudo bash installer.sh
 ```
-The scripts will be installed globally
+3. The scripts will be installed globally
 
 # Usage
 ## Start a Tunnel
