@@ -41,7 +41,7 @@ cd Dragon_Tunnel
 ```bash
 sudo bash installer.sh
 ```
-3. The scripts will be installed globally
+***The scripts will be installed globally***
 
 # Usage
 ## Start a Tunnel
