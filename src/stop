@@ -16,7 +16,6 @@ trap_ctrlc() {
 }
 trap trap_ctrlc INT
 
-
 print_banner() {
     clear
     local cols=$(tput cols)
@@ -29,18 +28,21 @@ print_banner() {
     echo
 }
 
-
 print_banner
 
-
 if [ ! -f "$TUNNEL_CONF" ]; then
-    echo -e "${RED}[✖] No tunnel.conf found! Cannot stop tunnel.${RESET}"
-    exit 1
+    echo -e "${YELLOW}[⚠] No tunnel.conf found! Attempting to recreate it...${RESET}"
+    sudo wg > "$TUNNEL_CONF" 2>/dev/null
+
+    if [ -s "$TUNNEL_CONF" ]; then
+        echo -e "${GREEN}[✔] tunnel.conf successfully recreated.${RESET}"
+    else
+        echo -e "${RED}[✖] Failed to recreate tunnel.conf. Make sure WireGuard is installed and configured.${RESET}"
+        exit 1
+    fi
 fi
 
-
 if ip link show "$TUNNEL_NAME" &> /dev/null; then
-
     CURRENT_LINK=$(strings "$TUNNEL_CONF" | grep -oP 'https://\w+\.tunnel\.pyjam\.as')
     if [ -n "$CURRENT_LINK" ]; then
         echo -e "${YELLOW}[⚠] Current tunnel link: ${CYAN}${CURRENT_LINK}${RESET}"
@@ -53,11 +55,10 @@ if ip link show "$TUNNEL_NAME" &> /dev/null; then
     if [ $STATUS -eq 0 ]; then
         echo -e "${GREEN}[✔] Tunnel stopped successfully!${RESET}"
     else
-        echo -e "${RED}[✖] Failed to stop the tunnel. Make sure it is active or you entered the correct password.${RESET}"
+        echo -e "${RED}[✖] Failed to stop the tunnel. Make sure it is active or configured properly.${RESET}"
     fi
 else
     echo -e "${GREEN}[✔] No active tunnel detected. Nothing to stop.${RESET}"
 fi
 
 echo
-
