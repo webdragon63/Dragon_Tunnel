@@ -31,6 +31,13 @@ print_banner() {
 print_banner
 
 if [ ! -f "$TUNNEL_CONF" ]; then
+    ACTIVE_IFACES=$(sudo wg show interfaces 2>/dev/null | tr -d ' ')
+
+    if [ -z "$ACTIVE_IFACES" ]; then
+        echo -e "${GREEN}[✔] No active tunnel detected. Nothing to stop.${RESET}"
+        exit 0
+    fi
+
     echo -e "${YELLOW}[⚠] No tunnel.conf found! Attempting to recreate it...${RESET}"
     sudo wg > "$TUNNEL_CONF" 2>/dev/null
 
